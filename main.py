@@ -1,26 +1,27 @@
+import json
 from src.linear_model import linear_model
 from src.ridge_model import ridge_model
 from src.model_evaluation import model_evaluation
+from src.visualization import parity_plot, residuals_over_time, residual_distribution
 
-# Create Linear Regression
+# Create Linear and Ridge models
 linear_regression = linear_model()
-
-# Dislay Linear Regression performance metrics
-linear_results = model_evaluation(linear_regression)
-print("Linear Regression Model Reults: ")
-print(f"MAE: {linear_results['MAE']:.2f} ({linear_results['MAE_PCT']:.2f}%)")
-print(f"RMSE: {linear_results['RMSE']:.2f} ({linear_results['RMSE_PCT']:.2f}%)")
-print(f"R²: {linear_results['R2']:.2f}")
-
-
-print()
-
-# Create Ridge Regression
 ridge_regression = ridge_model()
 
-# Dislay Ridge Regression performance metrics
-print("Ridge Regression Model Reults: ")
+# Evaluate models
+linear_results = model_evaluation(linear_regression)
 ridge_results = model_evaluation(ridge_regression)
-print(f"MAE: {ridge_results['MAE']:.2f} ({ridge_results['MAE_PCT']:.2f}%)")
-print(f"RMSE: {ridge_results['RMSE']:.2f} ({ridge_results['RMSE_PCT']:.2f}%)")
-print(f"R²: {ridge_results['R2']:.2f}")
+
+# Save metrics to JSON
+metrics = {
+    "Linear": {k: round(v, 2) for k, v in linear_results.items()},
+    "Ridge": {k: round(v, 2) for k, v in ridge_results.items()}
+}
+
+with open("results/metrics.json", "w") as f:
+    json.dump(metrics, f, indent=4)
+
+# Visualize linear and ridge model performance
+parity_plot(linear_regression, ridge_regression, "Linear Regression", "Ridge Regression")
+residuals_over_time(linear_regression, ridge_regression, "Linear Regression", "Ridge Regression")
+residual_distribution(linear_regression, ridge_regression, "Linear Regression", "Ridge Regression")
