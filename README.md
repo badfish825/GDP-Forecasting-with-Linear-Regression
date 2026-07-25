@@ -1,6 +1,6 @@
 
 # GDP Prediction Pipeline
-### Forecasting U.S. GDP using Linear Regression and Ridge Regression ML pipelines.
+### Forecasting U.S. GDP using Linear Regression and Ridge Regression ML Pipelines
 
 ## Overview
 This project builds an end-to-end regression pipeline using U.S. macroeconomic indicators from the Federal Reserve Economic Data (FRED) to predict quarterly GDP. The goal is to demonstrate **data ingestion, feature engineering, evaluation, and visualization** in an interpretable and reproducible way. 
